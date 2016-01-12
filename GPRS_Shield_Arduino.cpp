@@ -823,7 +823,6 @@ bool GPRS::getLocation(const __FlashStringHelper *apn, float *longitude, float *
 	if(NULL != ( s = strstr(gprsBuffer,"+CIPGSMLOC:")))
 	{
 		s = strstr((char *)s, ",");
-		s = s+1;
 		//Serial.println(*s);
 		i=0;
 		while(*(++s) !=  ',')
