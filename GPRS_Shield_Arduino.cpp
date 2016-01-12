@@ -327,6 +327,24 @@ bool GPRS::disableCLIPring(void)
     return sim900_check_with_cmd("AT+CLIP=0\r\n","OK\r\n",CMD);
 }
 
+bool GPRS::setSubscriberNumber(char *number)
+{
+    byte i = 0;
+    char gprsBuffer[65];
+    char *p,*s;
+	sim900_flush_serial();
+    if(!sim900_check_with_cmd("AT+CPBS=\"ON\"\r","OK\r\n",CMD))
+		return false;
+    sim900_send_cmd("AT+CPBW=1,\"");
+	sim900_send_cmd(number);
+	if(!sim900_check_with_cmd("\",129\r","OK\r\n",CMD))
+		return false;
+    if(!sim900_check_with_cmd("AT+CPBS=\"SM\"\r","OK\r\n",CMD))
+		return false;
+	
+	return true;
+}
+
 bool GPRS::getSubscriberNumber(char *number)
 {
 	//AT+CNUM								--> 7 + CR = 8

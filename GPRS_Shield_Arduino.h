@@ -157,6 +157,14 @@ public:
      */
     bool disableCLIPring(void);
 	
+	/** Set Subscriber Number
+	 *  @param number
+	 *	@return
+	 *		true on success
+	 *		false on error
+	 */
+	bool setSubscriberNumber(char *number);
+    
 	/** Get Subscriber Number (your number) using AT+CNUM command, but if nothing returns, then
 	 *  you need to command this to your SIM900. (See AT+CPBS, AT+CPBW)
 	 *	AT+CPBS="ON"
@@ -183,6 +191,7 @@ public:
      *      false on error
      */        
     bool getDateTime(char *buffer);
+	
 	/** get Signal Strength from SIM900 (see AT command: AT+CSQ) as integer
 	*  @param
 	*  @returns
