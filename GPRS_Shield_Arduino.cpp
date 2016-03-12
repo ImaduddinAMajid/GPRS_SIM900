@@ -482,6 +482,37 @@ bool GPRS::getDateTime(char *buffer)
     return false;
 }
 
+
+bool GPRS::getProviderName(char *buffer){
+  //AT+COPS?						--> 8 + CRLF = 10
+  //+COPS:0,0,"PROVIDERNAME"        --> 24+ CRLF = 26
+  //								--> CRLF     =  2
+  //OK								--> 2 + CRLF =  4
+
+    byte i = 0;
+    char gprsBuffer[43];
+    char *p,*s;
+    sim900_send_cmd("AT+COPS?\r\n");
+    sim900_clean_buffer(gprsBuffer,43);
+    sim900_read_buffer(gprsBuffer,43,DEFAULT_TIMEOUT);
+    if(NULL != ( s = strstr(gprsBuffer,"+COPS:"))) {
+        s = strstr((char *)(s),"\"");
+        s = s + 1;  //We are in the first phone number character 
+        p = strstr((char *)(s),"\""); //p is last character """
+        if (NULL != s) {
+            i = 0;
+            while (s < p) {
+              buffer[i++] = *(s++);
+            }
+            buffer[i] = '\0';            
+        }
+        return sim900_wait_for_resp("OK\r\n", CMD); 
+    }  
+    return false;
+    
+}
+
+
 bool GPRS::getSignalStrength(int *buffer)
 {
 	//AT+CSQ						--> 6 + CR = 10

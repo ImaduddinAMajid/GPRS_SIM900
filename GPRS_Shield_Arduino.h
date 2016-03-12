@@ -191,7 +191,14 @@ public:
      *      false on error
      */        
     bool getDateTime(char *buffer);
-	
+	 
+     /** get Provider Name from SIM900 (see AT command: AT+COPS?) as string
+     *  @param
+     *  @returns
+     *      true on success
+     *      false on error
+     */        
+    bool getProviderName(char *buffer);
 	/** get Signal Strength from SIM900 (see AT command: AT+CSQ) as integer
 	*  @param
 	*  @returns
